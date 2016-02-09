@@ -251,10 +251,10 @@ void StateMaker(S1){
 void MakeSelection(S1){
     switch(S1){        
         case 1:  
-                move2();
+                setInitial();
                 debounce(1); 
                 break;
-        case 2: setInitial();
+        case 2: moveAllTest();
                 debounce(1);
                 break;
         case 3: Grab();
@@ -278,6 +278,13 @@ void MakeSelection(S1){
                 break;
         
     }
+}
+
+void moveAllTest() {
+    MoveServo1_Degrees(0);
+    MoveServo1_Degrees(180);
+    MoveServo1_Degrees(0);
+
 }
 
 void move2() {
@@ -318,15 +325,14 @@ void setInitial(){
     debounce(1);
     OC1R = 0xE0;
     debounce(1);
-    OC2R = 0x21A0;
+    OC2R = 0x2466;
     debounce(1);
     OC3R = 0xEF;
     debounce(1);
     OC4R = 0x500;
     debounce(1);
-    OC5R = 0x485;
-    debounce(1);
-    OC6R = 0x480;   
+    OC5R = 0x475;
+    debounce(1);   
 }
 
 void SetTo180() {
@@ -375,127 +381,110 @@ void SetTo0(){
 }
 
 void MoveServo1_Degrees(int degrees){
-    double currentposition = OC1R;                    
-    int desiredposition = 0xE0 + (degrees*5.867);     //5.867 is calculated degree step for servo 1       
+    int currentposition = OC1R;                    
+    int desiredposition = 0xE0 + (degrees*0x5);     //5.272 calculated degree step       
        
     if(currentposition > desiredposition){           //moving negative angles
-        while(currentposition >= desiredposition ){
-            OC1R = (int)currentposition;
-            FastDebounce(15);
-            currentposition -= 5.867;
+        while(currentposition > desiredposition ){
+            currentposition--;
+            OC1R = currentposition;
+            FastDebounce(5);
         }
     }
-    else if(currentposition < desiredposition){
-        while(currentposition <= desiredposition ){
-            OC1R = (int)currentposition;
-            FastDebounce(15);
-            currentposition += 5.867;
-        }
-        
+    else if(currentposition < desiredposition){     // move positive direction
+        while(currentposition < desiredposition ){
+            currentposition++;
+            OC1R = currentposition;
+            FastDebounce(5);
+        }        
     }
-   
-    OC1R = desiredposition; 
-}     
+    OC1R = (int)desiredposition;
+    FastDebounce(5);
+}    
                        
 void MoveServo2_Degrees(int degrees){
-    int currentposition = OC2R; 
-    int desiredposition = 0xEF + degrees*0x06;  
-    int neededchange = desiredposition - currentposition;  
-    int stepsize ;  
-    
-    if(currentposition > desiredposition){           //moving negative angles
-        while(currentposition >= desiredposition ){
-            OC2R = currentposition;
-            FastDebounce(10);
-            currentposition -= 0x06;
-        }
+    int currentposition = OC2R;                    
+    double desiredposition = 0x21A0 + (degrees*0x4);     //3.944 calculated degree step
        
+    if(currentposition > desiredposition){           //moving negative angles
+        while(currentposition > desiredposition ){
+            currentposition--;
+            OC2R = currentposition;
+            FastDebounce(5);
+        }
     }
     else if(currentposition < desiredposition){
-        while(currentposition <= desiredposition ){
+        while(currentposition < desiredposition ){
+            currentposition++;
             OC2R = currentposition;
-            FastDebounce(10);
-            currentposition += 0x06;
-        }
-        
+            FastDebounce(5);
+        }        
     }
- 
+    OC2R = (int)desiredposition;
 }
 
 void MoveServo3_Degrees(int degrees){
-    int currentposition = OC3R; 
-    int desiredposition = 0xEF + degrees*0x06;  
-    int neededchange = desiredposition - currentposition;  
-    int stepsize ;  
-    
-    if(currentposition > desiredposition){           //moving negative angles
-        while(currentposition >= desiredposition ){
-            OC3R = currentposition;
-            FastDebounce(4);
-            currentposition -= 0x06;
-        }
+    int currentposition = OC3R;                    
+    double desiredposition = 0xE0 + (degrees*0x6);     //5.867 calculated degree step 
        
+    if(currentposition > desiredposition){           //moving negative angles
+        while(currentposition > desiredposition ){
+            currentposition--;
+            OC3R = currentposition;
+            FastDebounce(5);
+        }
     }
     else if(currentposition < desiredposition){
-        while(currentposition <= desiredposition ){
+        while(currentposition < desiredposition ){
+            currentposition++;
             OC3R = currentposition;
-            FastDebounce(4);
-            currentposition += 0x06;
-        }
-        
+            FastDebounce(5);
+        }        
     }
-   
+    OC3R = (int)desiredposition;
 }
-
 void MoveServo4_Degrees(int degrees){
-    int currentposition = OC4R; 
-    int desiredposition = 0xEF + degrees*0x06;  
-    int neededchange = desiredposition - currentposition;  
-    
-    
-    if(currentposition > desiredposition){           //moving negative angles
-        while(currentposition >= desiredposition ){
-            OC4R = currentposition;
-            FastDebounce(3);
-            currentposition -= 0x06;
-        }
+    int currentposition = OC4R;                    
+    double desiredposition = 0xE0 + (degrees*0x6);     //5.8944 calculated degree step       
        
+    if(currentposition > desiredposition){           //moving negative angles
+        while(currentposition > desiredposition ){
+            currentposition--;
+            OC4R = currentposition;
+            FastDebounce(5);
+        }
     }
     else if(currentposition < desiredposition){
-        while(currentposition <= desiredposition ){
+        while(currentposition < desiredposition ){
+            currentposition++;
             OC4R = currentposition;
-            FastDebounce(3);
-            currentposition += 0x06;
-        }
-        
+            FastDebounce(5);
+        }        
     }
-   
-    
-    
+    OC4R = (int)desiredposition;
 }
 
 void MoveServo5_Degrees(int degrees){
-    int currentposition = OC5R; 
-    int desiredposition = 0x150 + degrees*0x04;  
-    int neededchange = desiredposition - currentposition;  
-    int stepsize = neededchange/10;  
-    
+    int currentposition = OC5R;                    
+    double desiredposition = 0xE0 + (degrees*0x6);     //5.867 is calculated degree step       
+       
     if(currentposition > desiredposition){           //moving negative angles
-        while(currentposition >= desiredposition ){
-            currentposition += stepsize;
+        while(currentposition > desiredposition ){
+            currentposition--;
             OC5R = currentposition;
-            FastDebounce(3);
+            FastDebounce(5);
         }
     }
     else if(currentposition < desiredposition){
-        while(currentposition <= desiredposition ){
-            currentposition += stepsize;
+        while(currentposition < desiredposition ){
+            currentposition++;
             OC5R = currentposition;
-            FastDebounce(3);
-        }
+            FastDebounce(5);
+        }        
     }
-  
+    OC5R = (int)desiredposition;
 }
+
 
 void Grab(){    
     while(OC6R >= 0x230){
