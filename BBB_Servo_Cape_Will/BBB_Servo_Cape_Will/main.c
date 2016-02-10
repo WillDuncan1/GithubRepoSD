@@ -86,8 +86,14 @@ void TestServo4();       //State 4 function
 void TestServo5();       //State 5 function
 void TestServo6();       //State 6 function
 void rangeTest();
-void changePosAll();
+void changePosAll(int,int,int,int,int);
+void increment1(int);
+void increment2(int);
+void increment3(int);
+void increment4(int);
+void increment5(int);
 void move2();
+void testAll();
 
 int main(void) {
     // initialize the device
@@ -254,7 +260,7 @@ void MakeSelection(S1){
                 setInitial();
                 debounce(1); 
                 break;
-        case 2: moveAllTest();
+        case 2: testAll();
                 debounce(1);
                 break;
         case 3: Grab();
@@ -279,6 +285,12 @@ void MakeSelection(S1){
         
     }
 }
+
+void testAll() {
+    changePosAll(0,160,0,180,180);
+}
+
+
 
 void moveAllTest() {
     MoveServo1_Degrees(0);
@@ -498,6 +510,144 @@ void LetGo(){
     OC6R=0x490;
 }  
 
+void ResetMemory(){
+    
+    int ResetIndex = 0; 
+    
+    while(ResetIndex<6)
+        LocalMemory[ResetIndex++] = 0x01; 
+    
+    ResetIndex = 0;
+}
+
+//=================================================================================
+
+
+void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree5) {
+	int dStep1 = 0x5;
+	int dStep2 = 0x4;
+	int dStep3 = 0x6;
+	int dStep4 = 0x6;
+	int dStep5 = 0x6;
+	
+	int min1 = 0xE0;
+	int min2 = 0x21A0;
+	int min3 = 0xE0;
+	int min4 = 0xE0;
+	int min5 = 0xE0;
+	
+	int intPos1 = OC1R;
+	int intPos2 = OC2R;
+	int intPos3 = OC3R;
+	int intPos4 = OC4R;
+	int intPos5 = OC5R;
+	
+    int newPos1 = min1 + degree1*dStep1;
+	int newPos2 = min2 + degree2*dStep2;
+	int newPos3 = min3 + degree3*dStep3;
+	int newPos4 = min4 + degree4*dStep4;
+	int newPos5 = min5 + degree5*dStep5;
+    
+	int delta1 = newPos1 - intPos1;
+	int delta2 = newPos2 - intPos2;
+	int delta3 = newPos3 - intPos3;
+	int delta4 = newPos4 - intPos4;
+	int delta5 = newPos5 - intPos5;
+	
+    while((OC1R!=newPos1) || (OC2R!=newPos2) || (OC3R!=newPos3) || (OC4R!=newPos4) || (OC5R!=newPos5)) {
+        if (OC1R != newPos1){
+            increment1(delta1);
+//          delayMS(1);
+    	} else 
+        if (OC2R != newPos2){
+            increment2(delta2);
+//          delayMS(1);
+    	} else 
+        if (OC3R != newPos3){
+            increment3(delta3);
+//          delayMS(1);
+    	} else 
+        if (OC4R != newPos4){
+            increment4(delta4);
+//          delayMS(1);
+        } else 
+    	if (OC5R != newPos5){
+        	increment5(delta5);
+//          delayMS(1);
+        }
+    }
+}
+ 
+void increment1( int delta) {
+	int step1 = 1;	
+    int curPos = OC1R;
+	// negative delta
+	if (delta < 0) {
+		OC1R = curPos-step1;
+        FastDebounce(1);
+	} else {
+	// positive delta
+		OC1R = curPos+step1;
+        FastDebounce(1);
+	}
+}
+
+void increment2(int delta) {
+	int step2 = 1;
+    int curPos = OC2R;
+	// negative delta
+	if (delta < 0) {
+		OC2R = curPos-step2;
+        FastDebounce(1);
+	} else {
+	// positive delta
+		OC2R = curPos+step2;
+        FastDebounce(1);
+	}
+}
+
+void increment3(int delta) {
+	int step3 = 1;
+    int curPos = OC3R;
+	// negative delta
+	if (delta < 0) {
+		OC3R = curPos-step3;
+        FastDebounce(1);
+	} else {
+	// positive delta
+		OC3R = curPos+step3;
+        FastDebounce(1);
+	}
+}
+
+void increment4(int delta) {
+	int step4 = 1;
+    int curPos = OC4R;
+	// negative delta
+	if (delta < 0) {
+		OC4R = curPos-step4;
+        FastDebounce(1);
+	} else {
+	// positive delta
+		OC4R = curPos+step4;
+        FastDebounce(1);
+	}
+}
+
+void increment5(int delta) {
+	int step5 = 1;
+    int curPos = OC5R;
+	// negative delta
+	if (delta < 0) {
+		OC5R = curPos-step5;
+        FastDebounce(1);
+	} else {
+	// positive delta
+		OC5R = curPos+step5;
+        FastDebounce(1);
+	}
+}
+
 void TestServo1(){
     MoveServo1_Degrees(0);
     debounce(100);
@@ -549,127 +699,6 @@ void TestServo6(){
         OC6R -= 0x01; 
         FastDebounce(8); 
     }
-}
-
-void ResetMemory(){
-    
-    int ResetIndex = 0; 
-    
-    while(ResetIndex<6)
-        LocalMemory[ResetIndex++] = 0x01; 
-    
-    ResetIndex = 0;
-}
-
-//=================================================================================
-
-
-void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree5) {
-//	int dStep1 = -;
-	int dStep2 = 0;
-	int dStep3 = 0;
-	int dStep4 = 0;
-	int dStep5 = 0;
-	
-//	int min1 = oxE0;
-	int min2 = 0x21A0;
-	int min3 = 0xE0;
-	int min4 = 0xE0;
-	int min5 = 0xE0;
-	
-//	int intPos1 = OC1R;
-	int intPos2 = OC2R;
-	int intPos3 = OC3R;
-	int intPos4 = OC4R;
-	int intPos5 = OC5R;
-	
-//    int newPos1 = min1 + degree1*dstep1;
-	int newPos2 = min2 + degree2*dStep2;
-	int newPos3 = min3 + degree3*dStep3;
-	int newPos4 = min4 + degree4*dStep4;
-	int newPos5 = min5 + degree5*dStep5;
-    
-//	int delta1 = newPos1 - intPos1;
-	int delta2 = newPos2 - intPos2;
-	int delta3 = newPos3 - intPos3;
-	int delta4 = newPos4 - intPos4;
-	int delta5 = newPos5 - intPos5;
-	
-//	if (OC1R != newPos1){
-//		increment1(newPos1, delta1);
-//		delayMS(1);
-//	} else 
-	if (OC2R != newPos2){
-		increment2(newPos2, delta2);
-//		delayMS(1);
-	} else 
-	if (OC3R != newPos3){
-		increment3(newPos3, delta3);
-//		delayMS(1);
-	} else 
-	if (OC4R != newPos4){
-		increment4(newPos4, delta4);
-//		delayMS(1);
-	} else 
-	if (OC5R != newPos5){
-		increment5(newPos5, delta5);
-//		delayMS(1);
-	}
-}
- 
-void increment1(int newPos, int delta) {
-	int step1 = 1;	
-	// negative delta
-	if (delta < 0) {
-		OC1R -= step1;
-	} else {
-	// positive delta
-		OC1R += step1;
-	}
-}
-
-void increment2(int newPos, int delta) {
-	int step2 = 1;
-	// negative delta
-	if (delta < 0) {
-		OC2R -= step2;
-	} else {
-	// positive delta
-		OC2R += step2;
-	}
-}
-
-void increment3(int newPos, int delta) {
-	int step3 = 1;
-	// negative delta
-	if (delta < 0) {
-		OC3R -= step3;
-	} else {
-	// positive delta
-		OC3R += step3;
-	}
-}
-
-void increment4(int newPos, int delta) {
-	int step4 = 1;
-	// negative delta
-	if (delta < 0) {
-		OC4R -= step4;
-	} else {
-	// positive delta
-		OC4R += step4;
-	}
-}
-
-void increment5(int newPos, int delta) {
-	int step5 = 1;
-	// negative delta
-	if (delta < 0) {
-		OC5R -= step5;
-	} else {
-	// positive delta
-		OC5R += step5;
-	}
 }
 
 
