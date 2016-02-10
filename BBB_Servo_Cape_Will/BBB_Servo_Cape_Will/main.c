@@ -524,7 +524,7 @@ void ResetMemory(){
 
 
 void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree5) {
-	int dStep1 = 0x5;
+	int dStep1 = 0x6;
 	int dStep2 = 0x4;
 	int dStep3 = 0x6;
 	int dStep4 = 0x6;
@@ -532,7 +532,7 @@ void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree
 	
 	int min1 = 0xE0;
 	int min2 = 0x21A0;
-	int min3 = 0xE0;
+	int min3 = 0xEF;
 	int min4 = 0xE0;
 	int min5 = 0xE0;
 	
