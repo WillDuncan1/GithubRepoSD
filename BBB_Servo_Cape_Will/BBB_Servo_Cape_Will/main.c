@@ -525,7 +525,7 @@ void ResetMemory(){
 
 void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree5) {
 	int dStep1 = 0x6;
-	int dStep2 = 0x4;
+	int dStep2 = 0x5;
 	int dStep3 = 0x6;
 	int dStep4 = 0x6;
 	int dStep5 = 0x6;
@@ -536,6 +536,12 @@ void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree
 	int min4 = 0xE0;
 	int min5 = 0xE0;
 	
+    int max1 = 0x495;
+    int max2 = 0x2466;
+    int max3 = 0x500;
+    int max4 = 0x500;
+    int max5 = 0x475;
+    
 	int intPos1 = OC1R;
 	int intPos2 = OC2R;
 	int intPos3 = OC3R;
@@ -548,12 +554,26 @@ void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree
 	int newPos4 = min4 + degree4*dStep4;
 	int newPos5 = min5 + degree5*dStep5;
     
+    // make sure we don't exceed limits
+    if (newPos1>max1) {
+        newPos1=max1;
+    } else if (newPos2>max2) {
+        newPos2=max2;
+    } else if (newPos3>max3) {
+        newPos3=max3;
+    } else if (newPos4>max4) {
+        newPos4=max4;
+    } else if (newPos5>max5) {
+        newPos5=max5;
+    }
+    
 	int delta1 = newPos1 - intPos1;
 	int delta2 = newPos2 - intPos2;
 	int delta3 = newPos3 - intPos3;
 	int delta4 = newPos4 - intPos4;
 	int delta5 = newPos5 - intPos5;
 	
+    // increment each servo to get to desired positions
     while((OC1R!=newPos1) || (OC2R!=newPos2) || (OC3R!=newPos3) || (OC4R!=newPos4) || (OC5R!=newPos5)) {
         if (OC1R != newPos1){
             increment1(delta1);
