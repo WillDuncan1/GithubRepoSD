@@ -901,22 +901,22 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x9f8e
+.debug_info       0x000000       0xa036
  *(.debug_info)
- .debug_info      0x000000        0xaf8 build/default/production/mcc_generated_files/tmr1.o
- .debug_info      0x000af8        0xdb7 build/default/production/mcc_generated_files/oc6.o
- .debug_info      0x0018af        0xdb7 build/default/production/mcc_generated_files/oc5.o
- .debug_info      0x002666        0xdc2 build/default/production/mcc_generated_files/oc4.o
- .debug_info      0x003428        0xdc2 build/default/production/mcc_generated_files/oc3.o
- .debug_info      0x0041ea        0xdeb build/default/production/mcc_generated_files/oc2.o
- .debug_info      0x004fd5        0xdeb build/default/production/mcc_generated_files/oc1.o
- .debug_info      0x005dc0        0x7b1 build/default/production/mcc_generated_files/pin_manager.o
- .debug_info      0x006571        0x682 build/default/production/mcc_generated_files/interrupt_manager.o
- .debug_info      0x006bf3        0x38b build/default/production/mcc_generated_files/mcc.o
- .debug_info      0x006f7e        0xf04 build/default/production/mcc_generated_files/i2c2.o
- .debug_info      0x007e82        0xa9a build/default/production/mcc_generated_files/tmr2.o
- .debug_info      0x00891c        0x8f1 build/default/production/mcc_generated_files/tmr3.o
- .debug_info      0x00920d        0xd81 build/default/production/main.o
+ .debug_info      0x000000        0xb04 build/default/production/mcc_generated_files/tmr1.o
+ .debug_info      0x000b04        0xdc3 build/default/production/mcc_generated_files/oc6.o
+ .debug_info      0x0018c7        0xdc3 build/default/production/mcc_generated_files/oc5.o
+ .debug_info      0x00268a        0xdce build/default/production/mcc_generated_files/oc4.o
+ .debug_info      0x003458        0xdce build/default/production/mcc_generated_files/oc3.o
+ .debug_info      0x004226        0xdf7 build/default/production/mcc_generated_files/oc2.o
+ .debug_info      0x00501d        0xdf7 build/default/production/mcc_generated_files/oc1.o
+ .debug_info      0x005e14        0x7bd build/default/production/mcc_generated_files/pin_manager.o
+ .debug_info      0x0065d1        0x68e build/default/production/mcc_generated_files/interrupt_manager.o
+ .debug_info      0x006c5f        0x397 build/default/production/mcc_generated_files/mcc.o
+ .debug_info      0x006ff6        0xf10 build/default/production/mcc_generated_files/i2c2.o
+ .debug_info      0x007f06        0xaa6 build/default/production/mcc_generated_files/tmr2.o
+ .debug_info      0x0089ac        0x8fd build/default/production/mcc_generated_files/tmr3.o
+ .debug_info      0x0092a9        0xd8d build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000       0x1272
