@@ -67,33 +67,34 @@ void debounce(int);      // Debounce function which waits multiples of 100 ms
 void FastDebounce(int);  // Debounce function which waits multiples of 1 ms
 void StateMaker(int);    // Blinker of LEDs to show state 
 void MakeSelection(int);//Calls functions based on state 
-void MoveServo1_Degrees(int);        
-void MoveServo2_Degrees(int);
-void MoveServo3_Degrees(int);
-void MoveServo4_Degrees(int);
-void MoveServo5_Degrees(int);
 void ResetMemory();
-void SetTo90();
-void SetTo180();
-void SetTo0();
-void Grab();
-void LetGo();
-void SetToInitial();
-void TestServo1();       //State 1 function 
-void TestServo2();       //State 2 function
-void TestServo3();       //State 3 function
-void TestServo4();       //State 4 function
-void TestServo5();       //State 5 function
-void TestServo6();       //State 6 function
-void rangeTest();
+void grab();
+void letGo();
+void setInitial();
+void setTo90();
+void move1(int);
+void move2(int);
+void move3(int);
+void move4(int);
+void move5(int);
 void changePosAll(int,int,int,int,int);
 void increment1(int);
 void increment2(int);
 void increment3(int);
 void increment4(int);
 void increment5(int);
-void move2();
+void grabLow();
+void grabMed();
+void grabHigh();
+
+
+//testing functions
 void testAll();
+void rangeTest();
+       
+/////////////////////////////////////
+// The ALMIGHTY MAIN function!!!!! //
+/////////////////////////////////////
 
 int main(void) {
     // initialize the device
@@ -117,18 +118,10 @@ int main(void) {
         
         if(TransmitComplete){
             TransmitComplete = 0; 
-            SetTo90();
+            setTo90();
             if(LocalMemory[0]== 0x01){
-            MoveServo1_Degrees(LocalMemory[1]); 
-            debounce(1);
-            MoveServo4_Degrees(LocalMemory[4]);
-            debounce(1);
-            MoveServo3_Degrees(LocalMemory[3]);
-            debounce(1);
-            MoveServo2_Degrees(LocalMemory[2]);
-            debounce(1);
-            MoveServo5_Degrees(LocalMemory[5]);
-            ResetMemory();  
+                changePosAll(LocalMemory[1],LocalMemory[2],LocalMemory[3],LocalMemory[4],LocalMemory[5]);
+                ResetMemory();  
             }
             else if(LocalMemory[0]== 0x02){
                 
@@ -183,6 +176,24 @@ int main(void) {
         }
     }
     return -1;
+}
+// End main
+
+/*
+********************************************************************************
+***  Functions *****************************************************************
+********************************************************************************
+ */
+
+
+void ResetMemory(){
+    
+    int ResetIndex = 0; 
+    
+    while(ResetIndex<6)
+        LocalMemory[ResetIndex++] = 0x01; 
+    
+    ResetIndex = 0;
 }
 
 void debounce(int cycles){
@@ -254,29 +265,30 @@ void StateMaker(S1){
     }
 }
 
+
+
 void MakeSelection(S1){
     switch(S1){        
-        case 1:  
-                setInitial();
-                debounce(1); 
+        case 1: setInitial();
+                FastDebounce(1); 
                 break;
-        case 2: testAll();
-                debounce(1);
+        case 2: grab();
+                FastDebounce(1);
                 break;
-        case 3: Grab();
-                debounce(1);
+        case 3: letGo();
+                FastDebounce(1);
                 break;   
-        case 4: LetGo();
-                debounce(1);
+        case 4: grabLow();
+                FastDebounce(1);
                 break;
-        case 5: 
-                debounce(1);
+        case 5: grabMed();
+                FastDebounce(1);
                 break;
-        case 6: 
-                debounce(1);
+        case 6: grabHigh();
+                FastDebounce(1);
                 break;
         case 7: 
-                debounce(1);
+                FastDebounce(1);
                 break;
         case 8:  
                 break;
@@ -287,241 +299,176 @@ void MakeSelection(S1){
 }
 
 void testAll() {
-    changePosAll(0,160,0,180,180);
+    changePosAll(0,160,0,180,0); // initial
+    FastDebounce(1000);
+    changePosAll(0,90,70,180,0);
+    FastDebounce(1000);
+    changePosAll(0,65,30,110,0);
+    FastDebounce(1000);
+    changePosAll(0,0,30,69,0);  // high tier
+    FastDebounce(1000);
 }
-
-
-
-void moveAllTest() {
-    MoveServo1_Degrees(0);
-    MoveServo1_Degrees(180);
-    MoveServo1_Degrees(0);
-
-}
-
-void move2() {
-    int curPos = OC4R;
-    OC4R = curPos + 0x6;
-    FastDebounce(10);
-   
-}
-
-
-void rangeTest() {
-    int step = 1;
-    int intPos =    0xE0;
-    int finalPos =  0x495;
-    int end = 0x490;
-    OC1R = intPos;     
-    FastDebounce(1);
-    // positive rotation
-    while(OC1R < finalPos){
-        OC1R += step;
-        FastDebounce(20);
-    }
-    // negative rotation
-    while(OC1R > intPos) {
-        OC1R -= step;
-        FastDebounce(20);
-    }
-    // positive rotation
-    while(OC1R < end) {
-        OC1R += step;
-        FastDebounce(30);
-    }
     
+    
+void grabHigh() {
+    changePosAll(0,160,0,180,0); // initial
+    FastDebounce(1000);
+    changePosAll(0,90,70,180,0);
+    FastDebounce(1000);
+    changePosAll(0,65,30,110,0);
+    FastDebounce(1000);
+    changePosAll(0,0,30,69,0);  // high height tier grab position
+    FastDebounce(1000);
+    grab();
+    FastDebounce(1000);
+    changePosAll(0,90,50,180,0);  //initial
+    FastDebounce(1000);
+    changePosAll(0,160,0,180,0);  //initial
+    FastDebounce(1);
+}   
+
+void grabMed() {
+    changePosAll(0,160,0,180,0);  //initial
+    FastDebounce(1000);
+    changePosAll(0,90,70,180,0);
+    FastDebounce(1000);
+    changePosAll(0,10,74,130,0);  // medium height tier grab position
+    FastDebounce(1000);
+    grab();
+    FastDebounce(1000);
+    changePosAll(0,80,70,180,0);
+    FastDebounce(1000);
+    changePosAll(0,160,0,180,0);  //initial
+    FastDebounce(1);
+}
+
+void grabLow() {
+    changePosAll(0,160,0,180,0); //initial
+    FastDebounce(1000);
+    changePosAll(0,80,60,110,0);
+    FastDebounce(1000);
+    changePosAll(0,0,30,69,0);  // low  height tier grab position
+    FastDebounce(1000);
+    grab();
+    FastDebounce(1000);
+    changePosAll(0,90,65,100,0);
+    FastDebounce(1000);
+    changePosAll(0,160,0,180,0);  //initial
+    FastDebounce(1);
 }
 
 void setInitial(){
-    
-    debounce(1);
-    OC1R = 0xE0;
-    debounce(1);
-    OC2R = 0x2466;
-    debounce(1);
-    OC3R = 0xEF;
-    debounce(1);
-    OC4R = 0x500;
-    debounce(1);
-    OC5R = 0x475;
-    debounce(1);   
+    changePosAll(0,160,0,180,0);  //initial
+    FastDebounce(1);
 }
 
-void SetTo180() {
-    OC1R = 0x495;       
-    debounce(2);
-    OC2R = 0x200;
-    debounce(2);
-    OC3R = 0x505;
-    debounce(2);
-    OC4R = 0x300;
-    debounce(2);
-    OC2R = 0x505;
-    debounce(2);
-    OC4R = 0x500;
-    debounce(100);
-}
-
-void SetTo90(){
-                      ///Actually sets to vertically straight not 90 for each servo 
-    OC1R = 0xE0;       
-    debounce(2);
-    OC4R = 0x2F6;
-    debounce(2);
-    OC2R = 0x1FF;
-    debounce(2);
-    OC3R = 0x320;
-    debounce(2);
-    OC2R = 0x320;
-    debounce(5);
-}
-
-void SetTo0(){
-               //Sets all to 0 degrees 
-    OC1R = 0xE0;
-    debounce(2);
-    OC4R = 0x150;
-    debounce(2);
-    OC2R = 0xE0;
-    debounce(2);
-    OC4R = 0xE0; 
-    debounce(2);
-    OC3R = 0xE0;
-    debounce(2);
-    OC2R = 0xE0;
-    debounce(5);
-}
-
-void MoveServo1_Degrees(int degrees){
-    int currentposition = OC1R;                    
-    int desiredposition = 0xE0 + (degrees*0x5);     //5.272 calculated degree step       
-       
-    if(currentposition > desiredposition){           //moving negative angles
-        while(currentposition > desiredposition ){
-            currentposition--;
-            OC1R = currentposition;
-            FastDebounce(5);
-        }
-    }
-    else if(currentposition < desiredposition){     // move positive direction
-        while(currentposition < desiredposition ){
-            currentposition++;
-            OC1R = currentposition;
-            FastDebounce(5);
-        }        
-    }
-    OC1R = (int)desiredposition;
-    FastDebounce(5);
-}    
-                       
-void MoveServo2_Degrees(int degrees){
-    int currentposition = OC2R;                    
-    double desiredposition = 0x21A0 + (degrees*0x4);     //3.944 calculated degree step
-       
-    if(currentposition > desiredposition){           //moving negative angles
-        while(currentposition > desiredposition ){
-            currentposition--;
-            OC2R = currentposition;
-            FastDebounce(5);
-        }
-    }
-    else if(currentposition < desiredposition){
-        while(currentposition < desiredposition ){
-            currentposition++;
-            OC2R = currentposition;
-            FastDebounce(5);
-        }        
-    }
-    OC2R = (int)desiredposition;
-}
-
-void MoveServo3_Degrees(int degrees){
-    int currentposition = OC3R;                    
-    double desiredposition = 0xE0 + (degrees*0x6);     //5.867 calculated degree step 
-       
-    if(currentposition > desiredposition){           //moving negative angles
-        while(currentposition > desiredposition ){
-            currentposition--;
-            OC3R = currentposition;
-            FastDebounce(5);
-        }
-    }
-    else if(currentposition < desiredposition){
-        while(currentposition < desiredposition ){
-            currentposition++;
-            OC3R = currentposition;
-            FastDebounce(5);
-        }        
-    }
-    OC3R = (int)desiredposition;
-}
-void MoveServo4_Degrees(int degrees){
-    int currentposition = OC4R;                    
-    double desiredposition = 0xE0 + (degrees*0x6);     //5.8944 calculated degree step       
-       
-    if(currentposition > desiredposition){           //moving negative angles
-        while(currentposition > desiredposition ){
-            currentposition--;
-            OC4R = currentposition;
-            FastDebounce(5);
-        }
-    }
-    else if(currentposition < desiredposition){
-        while(currentposition < desiredposition ){
-            currentposition++;
-            OC4R = currentposition;
-            FastDebounce(5);
-        }        
-    }
-    OC4R = (int)desiredposition;
-}
-
-void MoveServo5_Degrees(int degrees){
-    int currentposition = OC5R;                    
-    double desiredposition = 0xE0 + (degrees*0x6);     //5.867 is calculated degree step       
-       
-    if(currentposition > desiredposition){           //moving negative angles
-        while(currentposition > desiredposition ){
-            currentposition--;
-            OC5R = currentposition;
-            FastDebounce(5);
-        }
-    }
-    else if(currentposition < desiredposition){
-        while(currentposition < desiredposition ){
-            currentposition++;
-            OC5R = currentposition;
-            FastDebounce(5);
-        }        
-    }
-    OC5R = (int)desiredposition;
-}
-
-
-void Grab(){    
-    while(OC6R >= 0x230){
+void grab(){    
+    while(OC6R >= 0x200){
         OC6R--;
         FastDebounce(1);
     }
-    OC6R = 0x235;
+    OC6R = 0x205;
+    FastDebounce(1);
 }
     
-void LetGo(){
-    OC6R=0x490;
+void letGo(){
+    OC6R=0x455;
+    FastDebounce(1);
+    OC6R=0x450;
 }  
 
-void ResetMemory(){
-    
-    int ResetIndex = 0; 
-    
-    while(ResetIndex<6)
-        LocalMemory[ResetIndex++] = 0x01; 
-    
-    ResetIndex = 0;
+setTo90() {
+    changePosAll(90,90,90,90,0);
+    FastDebounce(1);
 }
+
 
 //=================================================================================
 
+void move1(int degree1) {
+   	int dStep = 0x6;
+   	int min = 0xE0;
+    int max = 0x495;
+   	int intPos = OC1R;
+    int newPos = min + degree1*dStep;
+    // don't exceed range
+    if (newPos>max) {
+        newPos=max;
+    }
+   	int delta = newPos - intPos;
+    // change position
+    while (OC1R != newPos){
+            increment1(delta);
+    }
+}
+
+void move2(int degree2) {
+    int dStep = 0x5;
+   	int min = 0x21A0;
+    int max = 0x2466;
+   	int intPos = OC2R;
+    int newPos = min + degree2*dStep;
+    // don't exceed range
+    if (newPos>max) {
+        newPos=max;
+    }
+   	int delta = newPos - intPos;
+    // change position
+    while (OC2R != newPos){
+            increment2(delta);
+    }
+}
+
+void move3(int degree3) {
+    int dStep = 0x6;
+   	int min = 0xEF;
+    int max = 0x495;
+   	int intPos = OC3R;
+    int newPos = min + degree3*dStep;
+    // don't exceed range
+    if (newPos>max) {
+        newPos=max;
+    }
+   	int delta = newPos - intPos;
+    // change position
+    while (OC3R != newPos){
+            increment3(delta);
+    }
+}
+
+void move4(int degree4) {
+    int dStep = 0x6;
+   	int min = 0xE0;
+    int max = 0x495;
+   	int intPos = OC4R;
+    int newPos = min + degree4*dStep;
+    // don't exceed range
+    if (newPos>max) {
+        newPos=max;
+    }
+   	int delta = newPos - intPos;
+    // change position
+    while (OC4R != newPos){
+            increment4(delta);
+    }
+}
+
+void move5(int degree5) {
+    int dStep = 0x6;
+   	int min = 0xFF;
+    int max = 0x475;
+   	int intPos = OC5R;
+    int newPos = min + degree5*dStep;
+    // don't exceed range
+    if (newPos>max) {
+        newPos=max;
+    }
+   	int delta = newPos - intPos;
+    // change position
+    while (OC5R != newPos){
+            increment5(delta);
+    }
+}
 
 void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree5) {
 	int dStep1 = 0x6;
@@ -534,12 +481,12 @@ void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree
 	int min2 = 0x21A0;
 	int min3 = 0xEF;
 	int min4 = 0xE0;
-	int min5 = 0xE0;
+	int min5 = 0xFF;
 	
     int max1 = 0x495;
     int max2 = 0x2466;
-    int max3 = 0x500;
-    int max4 = 0x500;
+    int max3 = 0x495;
+    int max4 = 0x495;
     int max5 = 0x475;
     
 	int intPos1 = OC1R;
@@ -557,13 +504,17 @@ void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree
     // make sure we don't exceed limits
     if (newPos1>max1) {
         newPos1=max1;
-    } else if (newPos2>max2) {
+    }
+    if (newPos2>max2) {
         newPos2=max2;
-    } else if (newPos3>max3) {
+    }
+    if (newPos3>max3) {
         newPos3=max3;
-    } else if (newPos4>max4) {
+    }
+    if (newPos4>max4) {
         newPos4=max4;
-    } else if (newPos5>max5) {
+    }
+    if (newPos5>max5) {
         newPos5=max5;
     }
     
@@ -577,23 +528,18 @@ void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree
     while((OC1R!=newPos1) || (OC2R!=newPos2) || (OC3R!=newPos3) || (OC4R!=newPos4) || (OC5R!=newPos5)) {
         if (OC1R != newPos1){
             increment1(delta1);
-//          delayMS(1);
-    	} else 
+    	}
         if (OC2R != newPos2){
             increment2(delta2);
-//          delayMS(1);
-    	} else 
+    	} 
         if (OC3R != newPos3){
             increment3(delta3);
-//          delayMS(1);
-    	} else 
+    	} 
         if (OC4R != newPos4){
             increment4(delta4);
-//          delayMS(1);
-        } else 
+        } 
     	if (OC5R != newPos5){
         	increment5(delta5);
-//          delayMS(1);
         }
     }
 }
@@ -618,11 +564,11 @@ void increment2(int delta) {
 	// negative delta
 	if (delta < 0) {
 		OC2R = curPos-step2;
-        FastDebounce(1);
+        FastDebounce(2);
 	} else {
 	// positive delta
 		OC2R = curPos+step2;
-        FastDebounce(1);
+        FastDebounce(2);
 	}
 }
 
@@ -668,57 +614,34 @@ void increment5(int delta) {
 	}
 }
 
-void TestServo1(){
-    MoveServo1_Degrees(0);
-    debounce(100);
-    MoveServo1_Degrees(180);
-    debounce(100);
-    MoveServo1_Degrees(90);
-    
-}
 
-void TestServo2(){
-    MoveServo2_Degrees(0);
-    debounce(100);
-    MoveServo2_Degrees(180);
-    debounce(100);
-    MoveServo2_Degrees(90);
-    
-}
+/*
+ ******************************************************************************
+ */
 
-void TestServo3(){
-    MoveServo3_Degrees(0);
-    debounce(100);
-    MoveServo3_Degrees(180);
-    debounce(100);
-    MoveServo3_Degrees(90);
-    
-}
 
-void TestServo4(){
-    MoveServo4_Degrees(0);
-    debounce(100);
-    MoveServo4_Degrees(180);
-    debounce(100);
-    MoveServo4_Degrees(90);
-    
-}
-
-void TestServo5(){
-    OC5R = 0x110;  
-    while(OC5R <= 0x465){
-        OC5R += 0x01; 
-        FastDebounce(5); 
+void rangeTest() {
+    int step = 1;
+    int intPos =    0xE0;
+    int finalPos =  0x495;
+    int end = 0x490;
+    OC1R = intPos;     
+    FastDebounce(1);
+    // positive rotation
+    while(OC1R < finalPos){
+        OC1R += step;
+        FastDebounce(20);
     }
-}
-
-void TestServo6(){
-    
-    OC6R = 0x400;
-    while(OC6R >= 0x275){
-        OC6R -= 0x01; 
-        FastDebounce(8); 
+    // negative rotation
+    while(OC1R > intPos) {
+        OC1R -= step;
+        FastDebounce(20);
     }
+    // positive rotation
+    while(OC1R < end) {
+        OC1R += step;
+        FastDebounce(30);
+    }    
 }
 
 
