@@ -123,8 +123,8 @@ void I2C2_Initialize(void) {
     I2C2CON = 0x8000;
     // P disabled; IWCOL disabled; S disabled; I2COV disabled; BCL disabled; 
     I2C2STAT = 0x0000;
-    // I2CADD 16; 
-    I2C2_SlaveAddressSet(0x0010);
+    // I2CADD 17; 
+    I2C2_SlaveAddressSet(0x0011);
     // AMSK 0; 
     I2C2_SlaveAddressMaskSet(0x0000);
 

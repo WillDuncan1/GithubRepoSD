@@ -75,8 +75,8 @@ void OC2_Initialize(void) {
     OC2CON2 = 0x0000;
     // OC2RS 20000; 
     OC2RS = 0x4E20;
-    // OC2R 9318; 
-    OC2R = 0x2466;
+    // OC2R 9408; 
+    OC2R = 0x24C0;
     // OC2TMR 0; 
     OC2TMR = 0x0000;
 

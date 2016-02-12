@@ -70,8 +70,17 @@ void MakeSelection(int);//Calls functions based on state
 void ResetMemory();
 void grab();
 void letGo();
+
+//======================Preset Arm Positions
 void setInitial();
+void FaceHopper();
 void setTo90();
+//======================Preset Arm Functions 
+void grabLow();
+void grabMed();
+void grabHigh();
+void depositHopper();
+//=====================Servo Movement Functions
 void move1(int);
 void move2(int);
 void move3(int);
@@ -83,11 +92,7 @@ void increment2(int);
 void increment3(int);
 void increment4(int);
 void increment5(int);
-void grabLow();
-void grabMed();
-void grabHigh();
 void scan();
-void depositHopper();
 //testing functions
 void testAll();
 void rangeTest();
@@ -113,6 +118,7 @@ int main(void) {
     
     ResetMemory();
     
+    setInitial();
     while (1) {
         //All mighty while loop
         
@@ -126,15 +132,17 @@ int main(void) {
             else if(LocalMemory[0]== 0x02){
                 
                 switch(LocalMemory[1]){
-                    case 1: 
+                    case 1: setInitial();
                         break;
-                    case 2: break;
+                    case 2: FaceHopper();
+                        break;
                     case 3: break;
                     case 4: break;
                     case 5: break;
                             
                     
                 }
+                ResetMemory();
             }
             
         }
@@ -358,7 +366,13 @@ void grabLow() {
 }
 
 void setInitial(){
-    changePosAll(0,160,0,180,0);  //initial
+    changePosAll(0,155,10,180,0);  //initial
+    FastDebounce(1);
+}
+
+    
+void FaceHopper(){
+    changePosAll(180,155,10,180,0);
     FastDebounce(1);
 }
 
@@ -485,7 +499,7 @@ void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree
 	int min5 = 0xFF;
 	
     int max1 = 0x495;
-    int max2 = 0x2466;
+    int max2 = 0x24C0;
     int max3 = 0x495;
     int max4 = 0x495;
     int max5 = 0x475;

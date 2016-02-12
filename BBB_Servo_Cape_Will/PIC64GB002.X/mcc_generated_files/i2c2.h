@@ -125,7 +125,7 @@ extern "C" {
 
     } DRV_I2C2_SLAVE_DRIVER_STATUS;
 
-#define I2C2_SLAVE_DEFAULT_ADDRESS          0x10
+#define I2C2_SLAVE_DEFAULT_ADDRESS          0x11
 
     /**
         @Summary
