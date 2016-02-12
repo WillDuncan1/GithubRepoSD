@@ -86,15 +86,15 @@ void increment5(int);
 void grabLow();
 void grabMed();
 void grabHigh();
-
-
+void scan();
+void depositHopper();
 //testing functions
 void testAll();
 void rangeTest();
        
-/////////////////////////////////////
-// The ALMIGHTY MAIN function!!!!! //
-/////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// The ALMIGHTY MAIN function!!!!! ////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 int main(void) {
     // initialize the device
@@ -118,7 +118,7 @@ int main(void) {
         
         if(TransmitComplete){
             TransmitComplete = 0; 
-            setTo90();
+            setInitial();
             if(LocalMemory[0]== 0x01){
                 changePosAll(LocalMemory[1],LocalMemory[2],LocalMemory[3],LocalMemory[4],LocalMemory[5]);
                 ResetMemory();  
@@ -265,26 +265,24 @@ void StateMaker(S1){
     }
 }
 
-
-
 void MakeSelection(S1){
     switch(S1){        
-        case 1: setInitial();
+        case 1: depositHopper();
                 FastDebounce(1); 
                 break;
-        case 2: grab();
+        case 2: setInitial();
                 FastDebounce(1);
                 break;
-        case 3: letGo();
+        case 3: grab();
                 FastDebounce(1);
                 break;   
-        case 4: grabLow();
+        case 4: letGo();
                 FastDebounce(1);
                 break;
-        case 5: grabMed();
+        case 5: 
                 FastDebounce(1);
                 break;
-        case 6: grabHigh();
+        case 6: 
                 FastDebounce(1);
                 break;
         case 7: 
@@ -309,7 +307,19 @@ void testAll() {
     FastDebounce(1000);
 }
     
+void scan() {
     
+}
+
+void depositHopper() {
+    changePosAll(0,160,0,180,0); // initial
+    FastDebounce(1000);
+    changePosAll(180,160,0,180,0);
+    FastDebounce(1000);
+    changePosAll(180,90,40,180,0);
+    FastDebounce(1);
+}
+
 void grabHigh() {
     changePosAll(0,160,0,180,0); // initial
     FastDebounce(1000);
