@@ -129,16 +129,16 @@ int main(void) {
                 changePosAll(LocalMemory[1],LocalMemory[2],LocalMemory[3],LocalMemory[4],LocalMemory[5]);
                 ResetMemory();  
             }
-            else if(LocalMemory[0]== 0x02){
+            else if(LocalMemory[0] != 0x01){
                 
-                switch(LocalMemory[1]){
-                    case 1: setInitial();
+                switch(LocalMemory[0]){
+                    case 2: setInitial();
                         break;
-                    case 2: FaceHopper();
+                    case 3: FaceHopper();
                         break;
-                    case 3: break;
                     case 4: break;
                     case 5: break;
+                    case 6: break;
                             
                     
                 }
@@ -146,24 +146,19 @@ int main(void) {
             }
             
         }
-                if(PORTAbits.RA0 == 1){        //S1 pressed
-            S1++; 
-            if(S1==10)
+        
+        
+           if(PORTAbits.RA0 == 1){        //S1 pressed
+                S1++; 
+                if(S1==10)
                                      //Overflow Condition~No State 9
-                S1 = 1; 
+                      S1 = 1; 
             
-            debounce(500);
-            StateMaker(S1);         //Set the LEDs 
+                debounce(500);
+                StateMaker(S1);         //Set the LEDs 
         }
         
-        if(PORTAbits.RA2 == 1){          //S2 pressed 
-            
-           
-            
-            MakeSelection(S1); 
-            
-            debounce(500);         
-        }
+        
         
         
         //===============Heart beat <3 <3 <3
@@ -392,7 +387,7 @@ void letGo(){
     OC6R=0x450;*/
 }  
 
-setTo90() {
+void setTo90() {
     changePosAll(90,90,90,90,0);
     FastDebounce(1);
 }
@@ -498,7 +493,7 @@ void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree
 	int min4 = 0xE0;
 	int min5 = 0xFF;
 	
-    int max1 = 0x495;
+    int max1 = 0x500;
     int max2 = 0x24C0;
     int max3 = 0x495;
     int max4 = 0x495;

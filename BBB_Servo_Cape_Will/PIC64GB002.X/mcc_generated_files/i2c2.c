@@ -414,6 +414,9 @@ inline void __attribute__((always_inline)) I2C2_TransmitProcess(void) {
     I2C2_RELEASE_SCL_CLOCK_CONTROL_BIT = 1;
 
 }
+extern uint8_t LocalMemory[5]; 
+extern int i;
+extern int TransmitComplete; 
 
 inline void __attribute__((always_inline)) I2C2_ReceiveProcess(void) {
     // store the received data 
@@ -421,11 +424,19 @@ inline void __attribute__((always_inline)) I2C2_ReceiveProcess(void) {
     // sanity check (to avoid stress)
     if (p_i2c2_write_pointer == NULL)
         return;
+    
+    if(I2C2RCV != 0xFF){ 
+        LocalMemory[i] = I2C2_RECEIVE_REG; 
+         i++;
+         if(i >= 6){
+             TransmitComplete++;
+              i = 0;
+         }
+    }
 
     *p_i2c2_write_pointer = I2C2_RECEIVE_REG;
 
 }
-
 /* Note: This is an example of the I2C2_StatusCallback()
          implementation. This is an emulated EEPROM Memory
          configured to act as a I2C Slave Device.
