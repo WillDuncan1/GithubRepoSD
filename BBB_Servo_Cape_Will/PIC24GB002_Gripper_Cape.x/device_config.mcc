@@ -50,12 +50,12 @@
             <setting name="WINDIS" option="OFF"/>
             <setting name="GWRP" option="OFF"/>
             <setting name="GCP" option="OFF"/>
-            <setting name="FWDTEN" option="ON"/>
+            <setting name="FWDTEN" option="OFF"/>
             <setting name="JTAGEN" option="OFF"/>
             <setting name="Primary Oscillator" option="3000000"/>
             <setting name="Secondary Oscillator" option="31000"/>
             <setting name="generateConfigBits" option="true"/>
-            <file checksum="4101070900" modified="false" name="mcc.c" path="mcc_generated_files/mcc.c"/>
+            <file checksum="3928842463" modified="false" name="mcc.c" path="mcc_generated_files/mcc.c"/>
             <file checksum="385492727" modified="false" name="mcc.h" path="mcc_generated_files/mcc.h"/>
         </manager>
         <manager generated="true" name="Interrupt Manager" reloadPin="manual">

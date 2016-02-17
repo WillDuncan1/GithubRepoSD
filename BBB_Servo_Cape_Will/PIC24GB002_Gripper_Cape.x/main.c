@@ -80,6 +80,15 @@ int main(void) {
             ResetMemory();
         }
         
+        
+        if(PORTAbits.RA2 == 1){
+            grab();
+            debounce(50);
+        }
+        if(PORTAbits.RA0 == 1){
+            letGo();
+            debounce(50);
+        }
         //=============================Heart Beat <3 <3 <3 
         PORTAbits.RA1 = 1; 
         debounce(3);
@@ -112,11 +121,11 @@ void letGo(){
 }
 void grab(){
     
-    while(OC1R > 0x200){
+    while(OC1R > 0x180){
         OC1R-= 0x10;
         debounce(1);
     }
-    OC1R = 0x220; 
+    OC1R = 0x200; 
 }
 
 void ResetMemory(){

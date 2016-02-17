@@ -79,7 +79,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #pragma config WINDIS = OFF    // Windowed WDT->Standard Watchdog Timer enabled,(Windowed-mode is disabled)
 #pragma config GWRP = OFF    // General Segment Write Protect->Writes to program memory are allowed
 #pragma config GCP = OFF    // General Segment Code Protect->Code protection is disabled
-#pragma config FWDTEN = ON    // Watchdog Timer->Watchdog Timer is enabled
+#pragma config FWDTEN = OFF    // Watchdog Timer->Watchdog Timer is disabled
 #pragma config JTAGEN = OFF    // JTAG Port Enable->JTAG port is disabled
 
 #include "mcc.h"

@@ -122,10 +122,12 @@ int main(void) {
     while (1) {
         //All mighty while loop
         
+        //grabHigh();
+        
         if(TransmitComplete){
             TransmitComplete = 0; 
             setInitial();
-            if(LocalMemory[0]== 0x01){
+            if(LocalMemory[0]== 0x00){
                 changePosAll(LocalMemory[1],LocalMemory[2],LocalMemory[3],LocalMemory[4],LocalMemory[5]);
                 ResetMemory();  
             }
@@ -136,7 +138,8 @@ int main(void) {
                         break;
                     case 3: FaceHopper();
                         break;
-                    case 4: break;
+                    case 4: grabHigh();
+                        break;
                     case 5: break;
                     case 6: break;
                             
@@ -314,20 +317,29 @@ void depositHopper() {
 }
 
 void grabHigh() {
+    
     changePosAll(0,160,0,180,0); // initial
     FastDebounce(1000);
+    changePosAll(0,25,30,60,0);
+    FastDebounce(5000);
+    changePosAll(0,25,30,45,0);
+    FastDebounce(100);
+    changePosAll(0,45,45,45,0);
+    
+    /*
     changePosAll(0,90,70,180,0);
-    FastDebounce(1000);
+    FastDebounce(100);
     changePosAll(0,65,30,110,0);
     FastDebounce(1000);
     changePosAll(0,0,30,69,0);  // high height tier grab position
-    FastDebounce(1000);
-    grab();
-    FastDebounce(1000);
-    changePosAll(0,90,50,180,0);  //initial
-    FastDebounce(1000);
-    changePosAll(0,160,0,180,0);  //initial
-    FastDebounce(1);
+    FastDebounce(100);
+    //grab();
+    FastDebounce(100);
+    //changePosAll(0,90,50,180,0);  //initial
+    FastDebounce(100);
+    //changePosAll(0,160,0,180,0);  //initial
+    FastDebounce(1);*/
+    setInitial();
 }   
 
 void grabMed() {
@@ -397,7 +409,7 @@ void setTo90() {
 
 void move1(int degree1) {
    	int dStep = 0x6;
-   	int min = 0xE0;
+   	int min = 0xE5;
     int max = 0x495;
    	int intPos = OC1R;
     int newPos = min + degree1*dStep;

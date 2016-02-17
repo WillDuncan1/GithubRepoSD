@@ -68,12 +68,12 @@
             <setting name="WINDIS" option="OFF"/>
             <setting name="GWRP" option="OFF"/>
             <setting name="GCP" option="OFF"/>
-            <setting name="FWDTEN" option="ON"/>
+            <setting name="FWDTEN" option="OFF"/>
             <setting name="JTAGEN" option="OFF"/>
             <setting name="Primary Oscillator" option="3000000"/>
             <setting name="Secondary Oscillator" option="31000"/>
             <setting name="generateConfigBits" option="true"/>
-            <file checksum="3576922196" modified="false" name="mcc.c" path="mcc_generated_files/mcc.c"/>
+            <file checksum="410681599" modified="false" name="mcc.c" path="mcc_generated_files/mcc.c"/>
             <file checksum="3328983307" modified="false" name="mcc.h" path="mcc_generated_files/mcc.h"/>
         </manager>
     </managers>
