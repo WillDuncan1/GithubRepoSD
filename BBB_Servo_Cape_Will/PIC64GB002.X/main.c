@@ -126,7 +126,7 @@ int main(void) {
         
         if(TransmitComplete){
             TransmitComplete = 0; 
-            setInitial();
+            
             if(LocalMemory[0]== 0x00){
                 changePosAll(LocalMemory[1],LocalMemory[2],LocalMemory[3],LocalMemory[4],LocalMemory[5]);
                 ResetMemory();  
