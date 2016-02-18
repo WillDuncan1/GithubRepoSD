@@ -128,24 +128,28 @@ int main(void) {
             TransmitComplete = 0; 
             
             if(LocalMemory[0]== 0x00){
+                LocalMemory[1] = 0x01;
                 changePosAll(LocalMemory[1],LocalMemory[2],LocalMemory[3],LocalMemory[4],LocalMemory[5]);
-                ResetMemory();  
+                //ResetMemory();  
             }
             else if(LocalMemory[0] != 0x01){
                 
                 switch(LocalMemory[0]){
-                    case 2: setInitial();
+                    case 2: LocalMemory[1] = 0x01;
+                        setInitial();
                         break;
-                    case 3: FaceHopper();
+                    case 3: LocalMemory[1] = 0x01;
+                        FaceHopper();
                         break;
-                    case 4: grabHigh();
+                    case 4: LocalMemory[1] = 0x01;
+                        grabHigh();
                         break;
                     case 5: break;
                     case 6: break;
                             
                     
                 }
-                ResetMemory();
+                //ResetMemory();
             }
             
         }
@@ -572,11 +576,11 @@ void increment1( int delta) {
 	// negative delta
 	if (delta < 0) {
 		OC1R = curPos-step1;
-        FastDebounce(1);
+        FastDebounce(3);
 	} else {
 	// positive delta
 		OC1R = curPos+step1;
-        FastDebounce(1);
+        FastDebounce(3);
 	}
 }
 

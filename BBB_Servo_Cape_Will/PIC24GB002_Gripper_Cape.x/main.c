@@ -121,11 +121,11 @@ void letGo(){
 }
 void grab(){
     
-    while(OC1R > 0x180){
+    while(OC1R > 0x140){
         OC1R-= 0x10;
         debounce(1);
     }
-    OC1R = 0x200; 
+    OC1R = 0x150; 
 }
 
 void ResetMemory(){
