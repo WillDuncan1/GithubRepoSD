@@ -118,7 +118,7 @@ int main(void) {
     
     ResetMemory();
     
-    setInitial();
+    //setInitial();
     while (1) {
         //All mighty while loop
         
@@ -411,91 +411,6 @@ void setTo90() {
 
 //=================================================================================
 
-void move1(int degree1) {
-   	int dStep = 0x6;
-   	int min = 0xE5;
-    int max = 0x495;
-   	int intPos = OC1R;
-    int newPos = min + degree1*dStep;
-    // don't exceed range
-    if (newPos>max) {
-        newPos=max;
-    }
-   	int delta = newPos - intPos;
-    // change position
-    while (OC1R != newPos){
-            increment1(delta);
-    }
-}
-
-void move2(int degree2) {
-    int dStep = 0x5;
-   	int min = 0x21A0;
-    int max = 0x2466;
-   	int intPos = OC2R;
-    int newPos = min + degree2*dStep;
-    // don't exceed range
-    if (newPos>max) {
-        newPos=max;
-    }
-   	int delta = newPos - intPos;
-    // change position
-    while (OC2R != newPos){
-            increment2(delta);
-    }
-}
-
-void move3(int degree3) {
-    int dStep = 0x6;
-   	int min = 0xEF;
-    int max = 0x495;
-   	int intPos = OC3R;
-    int newPos = min + degree3*dStep;
-    // don't exceed range
-    if (newPos>max) {
-        newPos=max;
-    }
-   	int delta = newPos - intPos;
-    // change position
-    while (OC3R != newPos){
-            increment3(delta);
-    }
-}
-
-void move4(int degree4) {
-    int dStep = 0x6;
-   	int min = 0xE0;
-    int max = 0x495;
-   	int intPos = OC4R;
-    int newPos = min + degree4*dStep;
-    // don't exceed range
-    if (newPos>max) {
-        newPos=max;
-    }
-   	int delta = newPos - intPos;
-    // change position
-    while (OC4R != newPos){
-            increment4(delta);
-    }
-}
-
-void move5(int degree5) {
-    int dStep = 0x6;
-   	int min = 0xFF;
-    int max = 0x475;
-   	int intPos = OC5R;
-    int newPos = min + degree5*dStep;
-    // don't exceed range
-    if (newPos>max) {
-        newPos=max;
-    }
-   	int delta = newPos - intPos;
-    // change position
-    while (OC5R != newPos){
-            increment5(delta);
-    }
-}
-
 void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree5) {
 	int dStep1 = 0x6;
 	int dStep2 = 0x5;
@@ -506,7 +421,7 @@ void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree
 	int min1 = 0xE0;
 	int min2 = 0x21A0;
 	int min3 = 0xEF;
-	int min4 = 0xE0;
+	int min4 = 0xFF;
 	int min5 = 0xFF;
 	
     int max1 = 0x500;
@@ -640,6 +555,91 @@ void increment5(int delta) {
 	}
 }
 
+
+void move1(int degree1) {
+   	int dStep = 0x6;
+   	int min = 0xE5;
+    int max = 0x495;
+   	int intPos = OC1R;
+    int newPos = min + degree1*dStep;
+    // don't exceed range
+    if (newPos>max) {
+        newPos=max;
+    }
+   	int delta = newPos - intPos;
+    // change position
+    while (OC1R != newPos){
+            increment1(delta);
+    }
+}
+
+void move2(int degree2) {
+    int dStep = 0x5;
+   	int min = 0x21A0;
+    int max = 0x2466;
+   	int intPos = OC2R;
+    int newPos = min + degree2*dStep;
+    // don't exceed range
+    if (newPos>max) {
+        newPos=max;
+    }
+   	int delta = newPos - intPos;
+    // change position
+    while (OC2R != newPos){
+            increment2(delta);
+    }
+}
+
+void move3(int degree3) {
+    int dStep = 0x6;
+   	int min = 0xEF;
+    int max = 0x495;
+   	int intPos = OC3R;
+    int newPos = min + degree3*dStep;
+    // don't exceed range
+    if (newPos>max) {
+        newPos=max;
+    }
+   	int delta = newPos - intPos;
+    // change position
+    while (OC3R != newPos){
+            increment3(delta);
+    }
+}
+
+void move4(int degree4) {
+    int dStep = 0x6;
+   	int min = 0xE0;
+    int max = 0x495;
+   	int intPos = OC4R;
+    int newPos = min + degree4*dStep;
+    // don't exceed range
+    if (newPos>max) {
+        newPos=max;
+    }
+   	int delta = newPos - intPos;
+    // change position
+    while (OC4R != newPos){
+            increment4(delta);
+    }
+}
+
+void move5(int degree5) {
+    int dStep = 0x6;
+   	int min = 0xFF;
+    int max = 0x475;
+   	int intPos = OC5R;
+    int newPos = min + degree5*dStep;
+    // don't exceed range
+    if (newPos>max) {
+        newPos=max;
+    }
+   	int delta = newPos - intPos;
+    // change position
+    while (OC5R != newPos){
+            increment5(delta);
+    }
+}
 
 /*
  ******************************************************************************
