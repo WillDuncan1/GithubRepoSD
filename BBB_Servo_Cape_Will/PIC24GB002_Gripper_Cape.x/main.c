@@ -115,7 +115,7 @@ int main(void) {
 
 void letGo(){
     
-    while(OC1R < 0x450){
+    while(OC1R < 0x400){
         OC1R+= 0x10; 
         debounce(1);
     }

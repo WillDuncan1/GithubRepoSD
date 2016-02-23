@@ -157,12 +157,12 @@
                 <setting name="OC32" option="disabled" register="OC1CON2"/>
                 <setting name="OCTRIG" option="disabled" register="OC1CON2"/>
                 <setting name="OC1RS" option="10000" register="OC1RS"/>
-                <setting name="OC1R" option="1104" register="OC1R"/>
+                <setting name="OC1R" option="1024" register="OC1R"/>
                 <setting name="OC1TMR" option="0" register="OC1TMR"/>
-                <additionalSetting name="onTime" option="11.04 %"/>
+                <additionalSetting name="onTime" option="10.24 %"/>
             </initializer>
             <setting name="OCI" option="false"/>
-            <file checksum="2890814605" modified="false" name="oc1.c" path="mcc_generated_files/oc1.c"/>
+            <file checksum="1900434569" modified="false" name="oc1.c" path="mcc_generated_files/oc1.c"/>
             <file checksum="3633133115" modified="false" name="oc1.h" path="mcc_generated_files/oc1.h"/>
         </module>
         <module generated="true" mode="TMR" name="TMR2" order="4" reloadPin="auto" type="tmr_32b">
