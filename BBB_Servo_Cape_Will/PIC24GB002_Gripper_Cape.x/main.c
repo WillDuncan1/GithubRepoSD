@@ -68,6 +68,7 @@ int main(void) {
 
     while (1) {
         // Add your application code
+    
         
         if(TransmitComplete){
             TransmitComplete = 0; 
@@ -121,11 +122,11 @@ void letGo(){
 }
 void grab(){
     
-    while(OC1R > 0x140){
+    while(OC1R > 0x160){
         OC1R-= 0x10;
         debounce(1);
     }
-    OC1R = 0x150; 
+    OC1R = 0x160; 
 }
 
 void ResetMemory(){

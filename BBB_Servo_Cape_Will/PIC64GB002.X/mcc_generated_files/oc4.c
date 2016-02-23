@@ -75,8 +75,8 @@ void OC4_Initialize(void) {
     OC4CON2 = 0x0000;
     // OC4RS 10000; 
     OC4RS = 0x2710;
-    // OC4R 1141; 
-    OC4R = 0x0475;
+    // OC4R 1152; 
+    OC4R = 0x0480;
     // OC4TMR 0; 
     OC4TMR = 0x0000;
 

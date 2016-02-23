@@ -418,7 +418,7 @@ void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree
 	int dStep4 = 0x6;
 	int dStep5 = 0x6;
 	
-	int min1 = 0xE0;
+	int min1 = 0x100;
 	int min2 = 0x21A0;
 	int min3 = 0xEF;
 	int min4 = 0xFF;
@@ -427,7 +427,7 @@ void changePosAll(int degree1, int degree2, int degree3, int degree4, int degree
     int max1 = 0x500;
     int max2 = 0x24C0;
     int max3 = 0x495;
-    int max4 = 0x495;
+    int max4 = 0x480;
     int max5 = 0x475;
     
 	int intPos1 = OC1R;
